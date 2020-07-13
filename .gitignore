@@ -14,7 +14,6 @@
 *.swp
 /.idea
 /tmp
-/vendor
 .DS_Store
 *.sublime-*
 *.code-workspace
