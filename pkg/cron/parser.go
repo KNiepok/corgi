@@ -1,22 +1,10 @@
 package cron
 
 import (
-	"context"
 	"fmt"
 	"strconv"
 	"strings"
 )
-
-type Validator struct{}
-
-func NewValidator() *Validator {
-	return &Validator{}
-}
-
-func (v *Validator) Validate(ctx context.Context, interval string) error {
-	_, err := parseIntervalToCron(interval)
-	return err
-}
 
 func parseIntervalToCron(interval string) (string, error) {
 	elements := strings.Split(interval, " ")

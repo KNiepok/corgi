@@ -1,6 +1,8 @@
 package cron
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestParseRequestedIntervalToCron(t *testing.T) {
 	tests := []struct {

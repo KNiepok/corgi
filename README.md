@@ -43,3 +43,4 @@ You can also susbscribe for weekly notifications:
 * PostgreSQL instead of sqlite (or both)
 * Endpoint for lookup of what interval I entered
 * Support for monthly intervals
+* Move interval parsing logic into domain layer, to make cron swappable
