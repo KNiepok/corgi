@@ -14,8 +14,8 @@ import (
 )
 
 type config struct {
-	SlackToken             string `envconfig:"SLACK_TOKEN" default:"xoxb-1214709661638-1220082368901-r6UMDMiv9Ol6nqhdtBuWAesz"`
-	SlackVerificationToken string `envconfig:"SLACK_VERIFICATION_TOKEN" default:"rGfD2IIiFREb0YIETqVOqp14"`
+	SlackToken             string `envconfig:"SLACK_TOKEN" default:""`
+	SlackVerificationToken string `envconfig:"SLACK_VERIFICATION_TOKEN" default:""`
 	DebugMode              bool   `envconfig:"DEBUG_MODE" default:"false"`
 }
 
