@@ -19,6 +19,7 @@ func NewSubscriptionStorage(db *gorm.DB) *SubscriptionStorage {
 	}
 }
 
+// todo make that work with new details
 func (s *SubscriptionStorage) Add(ctx context.Context, sub corgi.ScheduledSubscription) error {
 	var alreadyExisting subscription
 	err := s.db.Model(&alreadyExisting).Where("user_id = ?", sub.User.ID).Find(&alreadyExisting).Error

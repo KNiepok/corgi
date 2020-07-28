@@ -8,7 +8,6 @@ import (
 )
 
 type SubscriptionService struct {
-	validator           corgi.IntervalValidator
 	storage             corgi.SubscriptionStorage
 	scheduler           corgi.Scheduler
 	notificationService corgi.NotificationService
@@ -16,12 +15,10 @@ type SubscriptionService struct {
 }
 
 func NewSubscriptionService(
-	validator corgi.IntervalValidator,
 	storage corgi.SubscriptionStorage,
 	scheduler corgi.Scheduler,
 	notificationService corgi.NotificationService) *SubscriptionService {
 	return &SubscriptionService{
-		validator:           validator,
 		storage:             storage,
 		scheduler:           scheduler,
 		notificationService: notificationService,
@@ -30,10 +27,6 @@ func NewSubscriptionService(
 }
 
 func (s *SubscriptionService) Subscribe(ctx context.Context, subscription corgi.Subscription) error {
-	if err := s.validator.Validate(ctx, subscription.Interval); err != nil {
-		return corgi.ErrInvalidInterval
-	}
-
 	alreadyExisting, err := s.storage.Get(ctx, subscription.User.ID)
 	if err != nil && errors.Cause(err) != corgi.ErrSubscriptionNotFound {
 		return err
@@ -46,8 +39,8 @@ func (s *SubscriptionService) Subscribe(ctx context.Context, subscription corgi.
 		}
 	}
 
-	entryID, err := s.scheduler.Add(ctx, subscription.Interval, func() {
-		err := s.notificationService.Notify(ctx, subscription.User)
+	entryID, err := s.scheduler.Add(ctx, subscription.Details, func() {
+		err := s.notificationService.Notify(ctx, subscription)
 		if err != nil {
 			s.logger.Errorf("failed to notify %s, err=%s", subscription.User.Email, err.Error())
 		}

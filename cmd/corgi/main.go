@@ -30,7 +30,6 @@ func main() {
 			slack.NewSender(conf.SlackToken),
 		)
 		subscriptionService := service.NewSubscriptionService(
-			cron.NewValidator(),
 			storage,
 			cron.NewScheduler(),
 			notificationService,

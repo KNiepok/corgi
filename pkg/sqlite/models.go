@@ -15,6 +15,7 @@ type subscription struct {
 	EntryID   int
 }
 
+// todo make that work with new details
 func toModel(model corgi.ScheduledSubscription) subscription {
 	return subscription{
 		UserID:    model.User.ID,
@@ -24,6 +25,7 @@ func toModel(model corgi.ScheduledSubscription) subscription {
 	}
 }
 
+// todo make that work with new details
 func (s *subscription) fromModel() corgi.ScheduledSubscription {
 	return corgi.ScheduledSubscription{
 		Subscription: corgi.Subscription{

@@ -21,11 +21,11 @@ func NewNotificationService(
 
 // Notify asks generator to create a message
 // Then passes it to sender
-func (n *NotificationService) Notify(ctx context.Context, user corgi.User) error {
-	msg, err := n.messageGenerator.CreateNotification(ctx, user)
+func (n *NotificationService) Notify(ctx context.Context, sub corgi.Subscription) error {
+	msg, err := n.messageGenerator.CreateNotification(ctx, sub)
 	if err != nil {
 		return err
 	}
 
-	return n.messageSender.Send(ctx, user, msg)
+	return n.messageSender.Send(ctx, sub.User, msg)
 }

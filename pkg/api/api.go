@@ -34,9 +34,6 @@ func NewAPI(
 func (api *API) Mount(router *chi.Mux) {
 	router.Post("/subscribe", api.handleSubscribe)
 	router.Post("/unsubscribe", api.handleUnsubscribe)
-	// admin moze wystrzelic teraz powiadomienia do kazdego
-	// kazdy moze sobie podejrzec swoja subskrypcje
-	//
 }
 
 func (api *API) handleSubscribe(w http.ResponseWriter, r *http.Request) {
@@ -63,13 +60,25 @@ func (api *API) handleSubscribe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	subDetails, err := corgi.NewSubscriptionDetails(s.Text)
+	if err != nil {
+		api.logger.Infof("failed to parse interval = %s", s.Text)
+		writeResponse(w,
+			errorIntro,
+			subscriptionErrorExplanation(s.Text),
+			example,
+		)
+		return
+	}
+
 	err = api.service.Subscribe(ctx, corgi.Subscription{
-		User:     user,
-		Interval: s.Text,
+		User:    user,
+		Details: subDetails,
 	})
 	if err != nil {
 		switch errors.Cause(err) {
 		case corgi.ErrInvalidInterval:
+			// todo remove that or what
 			api.logger.Infof("failed to parse interval = %s", s.Text)
 			writeResponse(w,
 				errorIntro,
@@ -131,7 +140,7 @@ func writeResponse(w http.ResponseWriter, blocks ...block) {
 		Blocks: blocks,
 	})
 	w.Header().Set("Content-Type", "application/json")
-	_,_ = w.Write(message)
+	_, _ = w.Write(message)
 }
 
 func (api *API) writeError(w http.ResponseWriter, err error) {

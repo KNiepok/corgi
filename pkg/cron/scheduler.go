@@ -2,6 +2,7 @@ package cron
 
 import (
 	"context"
+	"github.com/kniepok/corgi"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 )
@@ -19,8 +20,8 @@ func NewScheduler() *Scheduler {
 	}
 }
 
-func (s *Scheduler) Add(ctx context.Context, interval string, task func()) (int, error) {
-	spec, err := parseIntervalToCron(interval)
+func (s *Scheduler) Add(ctx context.Context, details corgi.SubscriptionDetails, task func()) (int, error) {
+	spec, err := parseDetailsToCron(details)
 	if err != nil {
 		return 0, err
 	}

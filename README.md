@@ -44,3 +44,5 @@ You can also susbscribe for weekly notifications:
 * Endpoint for lookup of what interval I entered
 * Support for monthly intervals
 * Move interval parsing logic into domain layer, to make cron swappable
+* Add ability for admin-tier team members to create notifications for members (with side effect of notifying them)
+* Low priority: Keep history of changes of subscriptions
