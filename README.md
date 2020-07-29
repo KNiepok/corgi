@@ -37,6 +37,7 @@ You can also susbscribe for weekly notifications:
 
 
 ## Todo, ideas
+* Swap slash commands for mentions 
 * Commands for admin-tier team members to notify members immediately
 * PostgreSQL instead of sqlite (or both)
 * Endpoint for lookup of what interval I entered

@@ -29,14 +29,14 @@ func NewNotificationGenerator(
 	jiraBaseURL,
 	baseTempoURL string) (*NotificationGenerator, error) {
 	ng := &NotificationGenerator{
-		tempoToken:   tempoToken,   // kc4e3hkTbTgZdO8uMMhvHS3Ka41a0R
-		baseTempoURL: baseTempoURL, //
+		tempoToken:   tempoToken,
+		baseTempoURL: baseTempoURL,
 		tempoClient:  http.DefaultClient,
 	}
 
 	tp := jira.BasicAuthTransport{
-		Username: jiraUsername, // krzysztof.niepokojczycki@gogoapps.io
-		Password: jiraToken,    // SmyjHOOLvKvkdeAUuW5j8FDF
+		Username: jiraUsername,
+		Password: jiraToken,
 	}
 	jc, err := jira.NewClient(tp.Client(), jiraBaseURL)
 	if err != nil {
@@ -161,7 +161,6 @@ func (n *NotificationGenerator) getLoggedTime(ctx context.Context, sub corgi.Sub
 	}
 	var timeWorked time.Duration
 	for _, s := range worklogsResponse.Worklogs {
-		println(s.Issue.Key)
 		timeWorked += time.Second * s.TimeSpentSeconds
 	}
 
