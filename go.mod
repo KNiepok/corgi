@@ -3,9 +3,11 @@ module github.com/kniepok/corgi
 go 1.14
 
 require (
+	github.com/andygrunwald/go-jira v1.12.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/jawher/mow.cli v1.1.0
 	github.com/jinzhu/gorm v1.9.14
+	github.com/jinzhu/now v1.1.1
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/pkg/errors v0.8.0

@@ -17,6 +17,11 @@ type config struct {
 	SlackToken             string `envconfig:"SLACK_TOKEN" default:""`
 	SlackVerificationToken string `envconfig:"SLACK_VERIFICATION_TOKEN" default:""`
 	DebugMode              bool   `envconfig:"DEBUG_MODE" default:"false"`
+	TempoToken             string `envconfig:"TEMPO_TOKEN" default:""`
+	JiraToken              string `envconfig:"JIRA_TOKEN" default:""`
+	JiraUsername           string `envconfig:"JIRA_USERNAME" default:""`
+	JiraBaseURL            string `envconfig:"JIRA_BASE_URL" default:"https://gogoapps.atlassian.net"`
+	TempoBaseURL           string `envconfig:"TEMPO_BASE_URL" default:"https://api.tempo.io/core/3"`
 }
 
 func main() {
@@ -24,7 +29,16 @@ func main() {
 	application := app.NewApplication(os.Args[0], "API for user authentication", &conf)
 	application.Setup = func(ctx context.Context) {
 		storage := getStorage(conf)
-		msgGenerator := tempo.NewNotificationGenerator()
+		msgGenerator, err := tempo.NewNotificationGenerator(
+			conf.TempoToken,
+			conf.JiraToken,
+			conf.JiraUsername,
+			conf.JiraBaseURL,
+			conf.TempoBaseURL,
+		)
+		if err != nil {
+			panic(err)
+		}
 		notificationService := service.NewNotificationService(
 			msgGenerator,
 			slack.NewSender(conf.SlackToken),
@@ -44,7 +58,7 @@ func main() {
 
 		starter := service.NewStarterService(
 			subscriptionService, storage)
-		err := starter.Start(ctx)
+		err = starter.Start(ctx)
 		if err != nil {
 			panic(err)
 		}

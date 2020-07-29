@@ -1,6 +1,15 @@
+# github.com/andygrunwald/go-jira v1.12.0
+## explicit
+github.com/andygrunwald/go-jira
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+github.com/dgrijalva/jwt-go
+# github.com/fatih/structs v1.0.0
+github.com/fatih/structs
 # github.com/go-chi/chi v4.1.2+incompatible
 ## explicit
 github.com/go-chi/chi
+# github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135
+github.com/google/go-querystring/query
 # github.com/gorilla/websocket v1.4.2
 github.com/gorilla/websocket
 # github.com/jawher/mow.cli v1.1.0
@@ -19,6 +28,9 @@ github.com/jinzhu/gorm
 github.com/jinzhu/gorm/dialects/sqlite
 # github.com/jinzhu/inflection v1.0.0
 github.com/jinzhu/inflection
+# github.com/jinzhu/now v1.1.1
+## explicit
+github.com/jinzhu/now
 # github.com/kelseyhightower/envconfig v1.4.0
 ## explicit
 github.com/kelseyhightower/envconfig
@@ -45,6 +57,9 @@ github.com/slack-go/slack/internal/timex
 github.com/slack-go/slack/slackutilsx
 # github.com/stretchr/testify v1.4.0
 ## explicit
+# github.com/trivago/tgo v1.0.1
+github.com/trivago/tgo/tcontainer
+github.com/trivago/tgo/treflect
 # golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
 golang.org/x/sys/unix
 # gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15
