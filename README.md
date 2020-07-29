@@ -37,11 +37,11 @@ You can also susbscribe for weekly notifications:
 
 
 ## Todo, ideas
-
-* Real Tempo integration to fetch more data about missing timesheets
-* Commands for admin-tier team members to notify all (or few) members
+* Commands for admin-tier team members to notify members immediately
 * PostgreSQL instead of sqlite (or both)
 * Endpoint for lookup of what interval I entered
-* Support for monthly intervals
+* Support for monthly intervals (maybe such a big interval misses the point of reminding)
 * Add ability for admin-tier team members to create notifications for members (with side effect of notifying them)
 * Low priority: Keep history of changes of subscriptions
+* Move representation out of tempo package (also rename message generator then)
+* Cache existing (jira accountID, email) pairs
