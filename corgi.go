@@ -125,25 +125,6 @@ func parseDailyIntervalToCron(input string) (SubscriptionDetails, error) {
 	}, nil
 }
 
-// parseTime will take 17:20 and return 17,20,nil
-func parseTime(timeString string) (uint8, uint8, error) {
-	t := strings.Split(timeString, ":")
-	hour, err := parseHour(t[0])
-	if err != nil {
-		return 0, 0, err
-	}
-
-	if len(t) == 1 {
-		return hour, 0, nil
-	}
-
-	minute, err := parseMinute(t[1])
-	if err != nil {
-		return 0, 0, err
-	}
-	return hour, minute, nil
-}
-
 // parseWeeklyIntervalToCron parses weekly request to valid cron.
 // Legit weekly interval requests look like this:
 // weekly @ FRI 17:20
@@ -175,6 +156,25 @@ func parseWeeklyIntervalToCron(interval string) (SubscriptionDetails, error) {
 		Hour:      hour,
 		Minute:    minute,
 	}, nil
+}
+
+// parseTime will take 17:20 and return 17,20,nil
+func parseTime(timeString string) (uint8, uint8, error) {
+	t := strings.Split(timeString, ":")
+	hour, err := parseHour(t[0])
+	if err != nil {
+		return 0, 0, err
+	}
+
+	if len(t) == 1 {
+		return hour, 0, nil
+	}
+
+	minute, err := parseMinute(t[1])
+	if err != nil {
+		return 0, 0, err
+	}
+	return hour, minute, nil
 }
 
 var daysOfWeek = map[string]time.Weekday{
