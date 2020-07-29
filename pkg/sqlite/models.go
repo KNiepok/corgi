@@ -11,21 +11,25 @@ type subscription struct {
 	UpdatedAt time.Time
 	UserID    string `gorm:"unique;not null"`
 	UserEmail string `gorm:"unique;not null"`
-	Interval  string
 	EntryID   int
+	Mode      int
+	Weekday   int
+	Hour      uint8
+	Minute    uint8
 }
 
-// todo make that work with new details
 func toModel(model corgi.ScheduledSubscription) subscription {
 	return subscription{
 		UserID:    model.User.ID,
 		UserEmail: model.User.Email,
-		Interval:  model.Interval,
 		EntryID:   model.EntryID,
+		Mode:      int(model.Details.Mode),
+		Weekday:   int(model.Details.DayOfWeek),
+		Hour:      model.Details.Hour,
+		Minute:    model.Details.Minute,
 	}
 }
 
-// todo make that work with new details
 func (s *subscription) fromModel() corgi.ScheduledSubscription {
 	return corgi.ScheduledSubscription{
 		Subscription: corgi.Subscription{
@@ -33,7 +37,12 @@ func (s *subscription) fromModel() corgi.ScheduledSubscription {
 				ID:    s.UserID,
 				Email: s.UserEmail,
 			},
-			Interval: s.Interval,
+			Details: corgi.SubscriptionDetails{
+				Mode:      corgi.SubscriptionMode(s.Mode),
+				DayOfWeek: time.Weekday(s.Weekday),
+				Hour:      s.Hour,
+				Minute:    s.Minute,
+			},
 		},
 		EntryID: s.EntryID,
 	}

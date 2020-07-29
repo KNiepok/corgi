@@ -19,7 +19,6 @@ func NewSubscriptionStorage(db *gorm.DB) *SubscriptionStorage {
 	}
 }
 
-// todo make that work with new details
 func (s *SubscriptionStorage) Add(ctx context.Context, sub corgi.ScheduledSubscription) error {
 	var alreadyExisting subscription
 	err := s.db.Model(&alreadyExisting).Where("user_id = ?", sub.User.ID).Find(&alreadyExisting).Error
@@ -31,8 +30,13 @@ func (s *SubscriptionStorage) Add(ctx context.Context, sub corgi.ScheduledSubscr
 		return err
 	}
 
-	alreadyExisting.EntryID = sub.EntryID
-	alreadyExisting.Interval = sub.Interval
+	// thats ugly
+	modeled := toModel(sub)
+	alreadyExisting.EntryID = modeled.EntryID
+	alreadyExisting.Mode = modeled.Mode
+	alreadyExisting.Weekday = modeled.Weekday
+	alreadyExisting.Hour = modeled.Hour
+	alreadyExisting.Minute = modeled.Minute
 
 	return s.db.Save(&alreadyExisting).Error
 }
